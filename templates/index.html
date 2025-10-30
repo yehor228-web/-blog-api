@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>Blog App: Home</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/popular.css' %}">
+{% endblock %}
+
+{% block content %}
+<header>
+    <div class="container">
+        <div class="header">
+            <div class="header-description">
+                <h1 class="header-title">Welcome to Django Blog App</h1>
+                <p class="header-subtitle">Master Web Development with amazing
+                    resources that are available for free! Join our Newsletter and get
+                    alerted when new articles, topics or courses are published.</p>
+                <form action="{% url 'home' %}" method="post" class="newsletter">
+                    {% csrf_token %}
+                    <input type="email" name="email" placeholder="Enter your email">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+            <div class="header-image">
+                <img src="{% static 'img/header.png' %}" alt>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="blogs">
+        <div class="blogs-header">
+            <h2>Latest Blogs</h2>
+            <a href="{% url 'all_blog_entries' %}" class="blogs-header-btn">See All</a>
+        </div>
+
+        <div class="blogs-list">
+            {% for post in posts %}
+            <div class="blog">
+                <a href="{% url 'blog_entry_details' blog_id=post.id %}" class="blog-link">
+                    <div class="blog-header">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                        {% endif %}
+                        <p class="blog-header-category">{{ post.category.title }}</p>
+                    </div>
+
+                    {% if post.video %}
+                    <div class="blog-media">
+                        <video class="blog-video" controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Ваш браузер не підтримує відтворення відео.
+                        </video>
+                    </div>
+                    {% endif %}
+
+                    <div class="blog-content">
+                        <h2 class="blog-title">{{ post.title }}</h2>
+                        <div class="blog-description">
+                            {{ post.content|truncatewords_html:30|safe }}
+                        </div>
+                        <div class="blog-content-created">
+                            <p class="blog-content-created-date">{{ post.created_at|date:"d/m/Y" }}</p>
+                            <p class="blog-content-created-author">{{ post.user }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="blogs">
+        <div class="blogs-header">
+            <h2>Popular Blogs</h2>
+            <a href="{% url 'all_blog_entries' %}" class="blogs-header-btn">See All</a>
+        </div>
+
+        <div class="blogs-list">
+            {% for post in top_rated_posts %}
+            <div class="blog">
+                <a href="{% url 'blog_entry_details' blog_id=post.id %}" class="blog-link">
+                    <div class="blog-header">
+                        {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                        {% endif %}
+                        <p class="blog-header-category">{{ post.category.title }}</p>
+                    </div>
+
+                    {% if post.video %}
+                    <div class="blog-media">
+                        <video class="blog-video" controls>
+                            <source src="{{ post.video.url }}" type="video/mp4">
+                            Ваш браузер не підтримує відтворення відео.
+                        </video>
+                    </div>
+                    {% endif %}
+
+                    <div class="blog-content">
+                        <h2 class="blog-title">{{ post.title }}</h2>
+                        <div class="blog-description">
+                            {{ post.content|truncatewords_html:30|safe }}
+                        </div>
+                        <div class="blog-content-created">
+                            <p class="blog-content-created-date">{{ post.created_at|date:"d/m/Y" }}</p>
+                            <p class="blog-content-created-author">{{ post.user }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<title>About Us</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+   <div class="about-container">
+  <div class="about-hero">
+    <h1>Про Django Blog App</h1>
+    <p>This project is created for those who want to learn web development and share knowledge through blogs..</p>
+  </div>
+
+      <div class="about-section">
+    <h2>Project objectives</h2>
+    <ul>
+      <li>Provide a convenient platform for publishing articles</li>
+      <li>Helping others learn Django</li>
+      <li>Develop a developer community</li>
+    </ul>
+  </div>
+
+    
+
+    
+{% endblock %}

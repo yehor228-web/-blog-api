@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <title>Редагувати пост - {{ blog.title }}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="edit-post">
+  <h2>Редагувати пост: {{ blog.title }}</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {{ form.media }}
+    {{video}}
+    <button type="submit" class="btn-save">Зберегти зміни</button>
+    <a href="{{ blog.get_absolute_url }}" class="btn-cancel">Скасувати</a>
+  </form>
+</div>
+{% endblock %}

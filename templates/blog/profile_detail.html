@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<title>Профіль {{ profile_user.username }}</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile">
+  {% if profile_user.profile.avatar %}
+  <img src="{{ profile_user.profile.avatar.url }}" class="avatar" alt="">
+  {% else %}
+  <div class="avatar"></div>
+  {% endif %}
+  
+  <div>
+    <div class="profile-info" >
+      <h1 class="profile-username">{{ user.username }}</h1>
+
+
+      <p class="profile-email">{{ user.email }}</p>
+      <p class="profile-joindate">Joined on
+        {{user.date_joined|date:"F j, Y" }}
+      </p>
+      {% if user.first_name or user.last_name %}
+      <p class="profile-name"><strong>Name:</strong>
+        {{user.get_full_name }}</p>
+      {% endif %}
+
+      {% if user.profile.bio %}
+      <p class="profile-bio"><strong>Bio:</strong>
+        {{user.profile.bio }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Edit Mode -->
+    <div class="profile-input"style="display: none;">
+
+      <input type="text" id="edit-username" value="{{user.username}}" placeholder="Enter new username..."
+        class="profile-username">
+
+      <input type="email" id="edit-email" value="{{user.email}}" placeholder="Enter new email..." class="profile-email">
+
+      <p class="profile-joindate">Joined on
+        {{user.date_joined|date:"F j, Y" }}
+      </p>
+
+      <input type="text" id="edit-first-name" value="{{user.first_name}}" placeholder="Enter new first name..."
+        class="profile-name">
+
+      <input type="text" id="edit-last-name" value="{{user.last_name}}" placeholder="Enter new last name..."
+        class="profile-name">
+
+      <textarea id="edit-bio" class="profile-bio"
+        placeholder="Enter something about yourself...">{{user.profile.bio}}</textarea>
+    </div>
+
+  </div>
+  {% if request.user == user %}
+  <div class="profile-actions">
+    <button class="btn" id="edit-btn">Edit Profile</button>
+    <button class="btn" id="save-btn" style="background-color: darkred; display: none;">Save</button>
+    <button class="btn" id="cancel-btn" style="background-color: rgb(51, 50, 50); display: none;">Cancel</button>
+  </div>
+  {% endif %}
+</div>
+
+
+
+<div class="stats">
+  <div class="stat"><b>{{ stats.total_posts }}</b><br>Пости</div>
+  <div class="stat"><b>{{ stats.avg_post_rating|floatformat:1 }}</b><br>Середній рейтинг постів</div>
+  <div class="stat"><b>{{ stats.total_comments }}</b><br>Коментарі</div>
+  <div class="stat"><b>{{ stats.avg_comment_stars|floatformat:1 }}</b><br>Середня оцінка в коментарях</div>
+  <div class="stat"><b>{{ stats.total_saved_posts }}</b><br>Збережені пости</div>
+</div>
+
+<div class="posts-selector">
+  <button id="user-posts-btn" class="all_post">
+    <h2>All Posts</h2>
+  </button>
+  {% if is_own_profile %}
+  <button id="user-saved-posts-btn" class="saved_posts">
+    <h2>Saved Posts</h2>
+  </button>
+  {% endif %}
+</div>
+
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+<div class="post-list" id="blogs">
+  <h2>Пости користувача</h2>
+  {% for blog in blogs %}
+  <div class="blog">
+    <h3><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></h3>
+    <p>Категорія: {{ blog.category.title }} | Коментарів: {{ blog.comments.count }}</p>
+    <p>Рейтинг: {{ blog.rating }}</p>
+
+    {% if blog.image %}
+    <div class="blog-image">
+      <a href="{{ blog.get_absolute_url }}">
+        <img src="{{ blog.image.url }}" alt="{{ blog.title }}">
+      </a>
+    </div>
+    {% endif %}
+
+    {% if is_own_profile %}
+    <div class="post-actions">
+      <a href="{% url 'edit_blog_entry' blog.pk %}" class="btn-save">Редагувати</a>
+      <form action="{% url 'delete_post' blog.pk %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete">Видалити</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+  {% empty %}
+  <p>У цього користувача ще немає постів.</p>
+  {% endfor %}
+</div>
+
+{% if is_own_profile %}
+<div class="post-list" id="saved_blogs">
+  <h2>Збережені пости користувача</h2>
+  {% for blog in saved_posts %}
+  <div class="blog">
+    <h3><a href="{{ blog.post.get_absolute_url }}">{{ blog.post.title }}</a></h3>
+    <p>Категорія: {{ blog.post.category.title }} | Коментарів: {{ blog.post.comments.count }}</p>
+    <p>Рейтинг: {{ blog.post.rating }}</p>
+
+    {% if blog.post.image %}
+    <div class="blog-image">
+      <a href="{{ blog.post.get_absolute_url }}">
+        <img src="{{ blog.post.image.url }}" alt="{{ blog.post.title }}">
+      </a>
+    </div>
+    {% endif %}
+
+    <div class="post-actions">
+      <a href="{% url 'edit_blog_entry' blog.post.pk %}" class="btn-save">Редагувати</a>
+      <form action="{% url 'delete_post' blog.post.pk %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn-delete">Видалити</button>
+      </form>
+    </div>
+  </div>
+  {% empty %}
+  <p>У вас ще немає збережених постів.</p>
+  {% endfor %}
+</div>
+{% endif %}
+
+<script>
+  function switchUserEditMode() {
+    const editBtn = document.querySelector("#edit-btn");
+    const saveBtn = document.querySelector("#save-btn");
+    const cancelBtn = document.querySelector("#cancel-btn");
+
+    const infoBlock = document.querySelector(".profile-info");
+    const inputBlock = document.querySelector(".profile-input");
+
+    editBtn.addEventListener("click", () => {
+      infoBlock.style.display = "none";
+      editBtn.style.display = "none";
+
+      inputBlock.style.display = "block";
+      saveBtn.style.display = "block";
+      cancelBtn.style.display = "block";
+    });
+
+    cancelBtn.addEventListener("click", () => {
+      infoBlock.style.display = "block";
+      editBtn.style.display = "block";
+
+      inputBlock.style.display = "none";
+      saveBtn.style.display = "none";
+      cancelBtn.style.display = "none";
+    });
+  }
+  function saveUserUpdates() {
+    const saveBtn = document.querySelector("#save-btn");
+
+    const usernameField = document.querySelector("#edit-username");
+    const emailField = document.querySelector("#edit-email");
+    const firstNameField = document.querySelector("#edit-first-name");
+    const lastNameField = document.querySelector("#edit-last-name");
+    const bioField = document.querySelector("#edit-bio");
+
+    saveBtn.addEventListener("click", () => {
+      const new_data = {
+        username: usernameField.value.trim(),
+        email: emailField.value.trim(),
+        firstName: firstNameField.value.trim(),
+        lastName: lastNameField.value.trim(),
+        bioField: bioField.value.trim()
+      }
+      console.log("New user data: ", new_data);
+      const url = "{% url 'update_profile' %}"
+      try {
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(new_data),
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+          }
+
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log("User updated:", data);
+            if (data.success) {
+              console.log("Updated successfully!");
+              updateUserDetails(data.user);
+              const cancelBtn = document.querySelector("#cancel-btn");
+              cancelBtn.click();
+            } else {
+              const error = data.error;
+              console.log("Failed update user. Error:", error);
+              alert(error);
+            }
+          })
+      } catch (e) {
+        console.error("Error save user updates:", e);
+      }
+
+    });
+  }
+  function updateUserDetails(user) {
+    const htmlContent = `
+            
+                <h1 class="profile-username">${user.username}</h1>
+
+                <p class="profile-email">${user.email}</p>
+                <p class="profile-joindate">Joined on
+                    {{user.date_joined|date:"F j, Y" }}
+                </p>
+            
+                <p class="profile-name"><strong>Name:</strong>
+                    ${user.firstName || ""}  ${user.lastName || ""}
+                </p>
+                
+                <p class="profile-bio"><strong>Bio:</strong>
+                    ${user.bio}
+                </p>
+            
+        `;
+
+    const profileInfo = document.querySelector(".profile-info");
+    console.log(profileInfo)
+    profileInfo.innerHTML = htmlContent;
+    console.log('update')
+  }
+  function switchUserPosts() {
+    const userPostsBlock = document.querySelector("#blogs");
+    const savedUserPostsBlock = document.querySelector("#saved_blogs");
+
+    document.querySelector("#user-posts-btn")?.addEventListener("click", () => {
+      userPostsBlock.style.display = "flex";
+      if (savedUserPostsBlock) savedUserPostsBlock.style.display = "none";
+    });
+
+    document.querySelector("#user-saved-posts-btn")?.addEventListener("click", () => {
+      userPostsBlock.style.display = "none";
+      if (savedUserPostsBlock) savedUserPostsBlock.style.display = "flex";
+    });
+
+    document.body.addEventListener("click", (e) => {
+      if (e.target.classList.contains("btn-delete")) {
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const form = e.target.closest("form");
+        if (form) form.submit();
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", () => {
+    switchUserEditMode();
+    switchUserPosts();
+    saveUserUpdates();
+  });
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>Blog App:Registration</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/auths.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="registration-container">
+
+    <div class="registration form">
+
+        <form method='post'>
+            {% csrf_token %}
+
+            {{form.as_div}}
+
+            <button type="submit">Зареєструватися</button>
+            
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>Blog App: {{ post.title }}</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog_entry_details.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="blog-detail-container">
+        <div class="blog-post">
+            <h1 class="post-title">{{ post.title }}</h1>
+            <div class="post-meta">
+                {% if post.user and post.user.username %}
+                    <a href="{% url 'profile_detail' username=post.user.username %}">
+                        By {{ post.user.username }}
+                    </a>
+                {% else %}
+                    <span>By Unknown Author</span>
+                {% endif %}
+                <span>{{ post.created_at|date:"F d, Y" }}</span> |
+
+                <p class="blog-headr-raiting"><strong>{{post.raiting|floatformat:1}}</strong></p>
+                <span>Category: <a href="{% url 'all_blog_entries' %}?category={{ post.category.title }}">{{post.category.title}}</a></span>
+            </div>
+            <div class="post-content">
+                {{ post.content|safe }}
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-widget">
+                <h3>Categories</h3>
+                <ul class="category-list">
+                    {% for category in categories %}
+                    <li><a href="{% url 'all_blog_entries' %}?category={{ category.title }}">{{ category.title }}</a>
+
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if recommended_posts %}
+            <div class="sidebar-widget">
+                <h3>Recommended Posts</h3>
+                <div class="recommended-posts">
+                    {% for r_post in recommended_posts %}
+                    <div class="recommended-post">
+                        <a href="{% url 'blog_entry_details' blog_id=r_post.id %}">
+                            <h4>{{ r_post.title }}</h4>
+                            <p class="recommended-post-meta">{{ r_post.created_at|date:"d M, Y" }}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<h3 class="comment-section-title">Comment:</h3>
+
+{% for comment in comments %}
+<div class="comment">
+
+    <div class="comment-content">
+        {{ comment.content }}
+    </div>
+    <div class="comment-date">
+        {{ comment.created_at|date:"d.m.Y H:i" }}
+    </div>
+</div>
+{% empty %}
+<p>no Comment.</p>
+{% endfor %}
+
+
+
+
+{% for comment in comments %}
+<div class="comment" id="comment-{{ comment.id }}">
+    <div class="comment-header">
+        <strong>{{ comment.user.username }}</strong>
+        <span class="comment-stars">⭐ {{ comment.stars }}</span>
+    </div>
+    <div class="comment-content">{{ comment.content }}</div>
+
+    {% if comment.user == request.user or request.user.is_staff %}
+    <button class="delete-btn" data-id="{{ comment.id }}">deactivate</button>
+    {% endif %}
+</div>
+{% empty %}
+<p>Немає коментарів</p>
+{% endfor %}
+
+<hr>
+
+<form class="comment-form" method="POST">
+    {% csrf_token %}
+    <div class="stars-group">
+        {% for i in "12345" %}
+        <input type="radio" id="star-{{i}}" name="rating" value="{{i}}" required style="display:none;">
+        <label for="star-{{i}}" data-value="{{i}}">
+            <svg class="star" viewBox="0 -0.5 33 33" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="27.865 31.83 17.615 26.209 7.462 32.009 9.553 20.362 
+                                 0.99 12.335 12.532 10.758 17.394 0 
+                                 22.436 10.672 34 12.047 25.574 20.22">
+                </polygon>
+            </svg>
+        </label>
+        {% endfor %}
+    </div>
+
+    {{ form.stars }}
+    {{ form.content }}
+    <button type="submit">Submit</button>
+</form>
+<div class="post-container" style="position: relative; border: 1px solid #ccc; padding: 20px; border-radius: 10px;">
+    <!-- Кнопка зберігання -->
+    <form style="display:none;">{% csrf_token %}</form>
+    <button class="blog-bookmark {% if is_post_saved %}active{% endif %}" data-post-id="{{ post.id }}"
+            style="position: absolute; top: 10px; right: 10px; background: none; border: none; padding: 0;">
+        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"
+             style="width:48px; height:48px; cursor:pointer; transition:fill 0.2s;">
+            <path d="M440.125,0H0v512h512V71.875L440.125,0z M281.6,31.347h31.347v94.041H281.6V31.347z 
+                     M136.359,31.347h113.894v125.388 h94.041V31.347h32.392v156.735H136.359V31.347z 
+                     M417.959,480.653H94.041V344.816h323.918V480.653z 
+                     M417.959,313.469H94.041 v-31.347h323.918V313.469z 
+                     M480.653,480.653h-31.347V250.775H62.694v229.878H31.347V31.347h73.665v188.082h303.02V31.347h19.108
+                     l53.512,53.512V480.653z"></path>
+        </svg>
+    </button>
+
+    
+</div>
+
+
+
+
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const saveBtn = document.querySelector(".blog-bookmark")
+        saveBtn.addEventListener("click", (e) => {
+            const postId = saveBtn.dataset.postId;
+            const csfrToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            console.log("PostId: ", postId);
+            console.log("CSRF Token: ", csfrToken);
+
+            fetch(`/post/${postId}/save/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csfrToken,
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.isSaved) {
+                        saveBtn.classList.add("active")
+                    } else {
+                        saveBtn.classList.remove("active")
+                    }
+                });
+        })
+        const stars = document.querySelectorAll(".stars-group label");
+        const hiddenStarsInput = document.querySelector(".comment-form input[name='stars']");
+
+        stars.forEach(star => {
+            star.addEventListener("click", () => {
+                const value = parseInt(star.dataset.value);
+                stars.forEach((s, index) => {
+                    const svg = s.querySelector(".star");
+                    svg.classList.toggle("active", index < value);
+                });
+                hiddenStarsInput.value = value;
+            });
+        });
+
+
+        document.querySelectorAll(".delete-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const commentId = button.dataset.id;
+                fetch(`/comment/delete/${commentId}/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken"),
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById(`comment-${commentId}`).remove();
+                        } else {
+                            alert(data.error || "Помилка видалення");
+                        }
+                    });
+            });
+        });
+
+
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
+
+</script>
+
+
+
+
+{% endblock %}

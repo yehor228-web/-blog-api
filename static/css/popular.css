@@ -1,0 +1,61 @@
+/* Контейнер для списку */
+.popular-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/* Картка кожного поста */
+.popular-item {
+  background: #0b3d2e;              /* темно-зелений фон */
+  color: #ffffff;                   /* білий текст */
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Анімація при наведенні */
+.popular-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+/* Заголовок */
+.popular-item h3 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  color: #f1c40f;                   /* жовтий заголовок */
+}
+
+/* Обрізаний текст */
+.popular-item p {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #ecf0f1;                   /* світлий сірий */
+}
+
+/* Рейтинг */
+.rating {
+  font-weight: bold;
+  color: #f39c12;                   /* помаранчево-жовтий */
+  margin: 8px 0;
+}
+
+/* Додаткова інформація */
+.popular-item small {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #bdc3c7;                   /* світло-сірий */
+}
+
+/* Заголовок сторінки */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #27ae60;                   /* яскраво-зелений */
+  margin-bottom: 30px;
+}

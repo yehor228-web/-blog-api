@@ -1,0 +1,942 @@
+:root {
+    --primary-bg-color: #183114;
+    --secondary-bg-color: #446129;
+    --base-bg-color:rgb(242, 234, 223);
+    --primary-text-color: #FCEE21;
+    --secondary-text-color: #ffffff;
+    --base-text-color:#000000;
+}
+
+.nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px;
+    background: linear-gradient(to right, var(--primary-bg-color), var(--secondary-bg-color));
+}
+
+.nav-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--primary-text-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 50%;
+}
+
+.nav-link {
+    list-style: none;
+
+}
+
+.messages li {
+    padding: 10px;
+    width: 100px;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+.nav-link a {
+    display: inline-block;
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-link a:hover {
+    color: var(--primary-text-color);
+    transform: scale(1.2);
+}
+
+.nav-active a {
+    color: var(--primary-text-color);
+    font-weight: bold;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background: linear-gradient(to right, var(--primary-bg-color), var(--secondary-bg-color));
+}
+
+.header {
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.header-description {
+    width: 60%;
+}
+
+.header-image {
+    width: 35%;
+}
+
+.header-title{
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+    font-size: 50px;
+    font-weight: bold;
+}
+.header-subtitle {
+    color: var(--secondary-text-color);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.newsletter{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.newsletter input{
+    width: 90%;
+    padding: 5px 15px;
+    border: 1px solid var(--primary-text-color);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--secondary-text-color);
+    font-size: 18px;
+    height: 40px;;
+}
+.newsletter input::placeholder{
+    color: var(--primary-text-color);
+}
+.newsletter input:focus{
+    outline: none;
+    border: 2px solid var(--primary-text-color);
+}
+.newsletter button{
+    background-color: var(--primary-text-color);
+    /* color: var(--secondary-text-color); */
+    border:none;
+    border-radius: 20px;
+    height: 40px;
+    width: 100px;
+    font-size: 18px;
+    font-weight: 500;
+    transform: translateX(-40px);
+    transition: all 0.2s ease;
+}
+.newsletter button:hover{
+    transform: translateX(-40px) scale(1.1);
+}
+
+.blogs{
+    margin-top: 50px;
+}
+.blogs-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.blogs-header h2{
+    font-size: 30px;
+    color: var(--base-text-color);
+}
+.blogs-header-btn{
+    display: inline-block;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
+    padding: 10px 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.blogs-header-btn:hover{
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.blogs-list{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+.blog {
+
+    width: 23%;
+    border-radius: 10px;
+    background-color: var(--base-bg-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 400px;
+}
+
+.blog-link {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: var(--base-text-color);
+    transition: all 0.2s ease;
+}
+
+.blog-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.blog:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.blog-header img{
+     height: 150px;
+     height: 100%;
+}
+.blog-header{
+    position: relative;
+}
+.blog-header-category{
+    position: absolute;
+    padding: 2px 15px;
+    bottom: 10px;
+    left: 0px;
+    background-color: var(--primary-bg-color);
+    color:var(--primary-text-color);
+    border-radius: 0 15px 15px 0;
+}
+.blog-content{
+    padding: 5px 10px;
+}
+.blog-description{
+    font-size: 14px;
+    color: rgb(82, 82, 82);
+    overflow: hidden;
+    max-height: 150;
+}
+.blog-content-created{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.messages li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+body {
+    position: relative;
+    min-height: 100vh;
+
+}
+
+.messages {
+    position: absolute;
+    left: 10px;
+    bottom: 100px;
+    background: transparent;
+    list-style: none;
+     z-index: 10;
+}
+
+.messages li {
+    padding: 10px;
+    width: 300px;
+    margin-bottom: 10px;
+    border: 2px solid gray;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+   
+}
+
+.messages li p {
+    width: 250px;
+}
+
+.message-close-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+}
+
+.progress-ring {
+    position: absolute;
+}
+
+.progress-ring-circle {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+    transition: all 0.1s linear;
+}
+
+.message-close-btn img {
+    position: relative;
+    width: 25px;
+    height: 25px;
+}
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 20px;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.about-hero {
+    text-align: center;
+    background-color: #1f3a1f;
+    color: #ffeb3b;
+    padding: 30px 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.about-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.about-section {
+    margin-bottom: 30px;
+}
+
+.about-section h2 {
+    color: #1f3a1f;
+    margin-bottom: 10px;
+    border-left: 4px solid #ffeb3b;
+    padding-left: 10px;
+}
+
+.about-section ul {
+    list-style-type: disc;
+    padding-left: 25px;
+    color: #333;
+}
+
+.about-section p, .about-section li {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Профіль */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #e5e7eb;
+    border: 3px solid #14532d; /* темно-зелена рамка */
+}
+
+.profile h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #14532d; /* зелений як у шапці */
+}
+
+.profile p {
+    margin: 8px 0 0;
+    color: #374151;
+    font-size: 15px;
+}
+
+/* Статистика */
+.stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.stat {
+    flex: 1;
+    min-width: 180px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #ffffff;
+    border-left: 6px solid #14532d;
+    text-align: center;
+    font-size: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat b {
+    display: block;
+    font-size: 22px;
+    color: #eab308; /* жовтий акцент */
+    margin-bottom: 5px;
+}
+
+.stat:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Пости */
+.blogs {
+    margin-top: 20px;
+}
+
+.blogs h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #14532d;
+    font-weight: 700;
+}
+
+.blog {
+    background: #ffffff;
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.blog h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.blog h3 a {
+    text-decoration: none;
+    color: #14532d;
+    transition: color 0.2s ease;
+}
+
+.blog h3 a:hover {
+    color: #eab308; /* жовтий при наведенні */
+}
+
+.blog p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #4b5563;
+}
+.btn-delete {
+    background: #b91c1c; /* червоний */
+    color: #fff;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-delete:hover {
+    background: #dc2626; /* світліший червоний */
+}
+.profile-actions {
+    margin-left: auto;
+    align-self: flex-start;
+    display: flex;
+    gap: 10px;
+}
+
+.profile-actions .btn {
+    display: inline-block;
+    background-color: #183114;
+    color: #FCEE21;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 90px;
+    cursor: pointer;
+    font-size: 0.95em;
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.profile-actions .btn:hover {
+    background-color: #446129;
+    transform: translateY(-2px);
+}
+/* Інлайнова форма редагування */
+.blog form {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.blog form input[type="text"],
+.blog form select,
+.blog form textarea,
+.blog form input[type="file"],
+.blog form input[type="color"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.blog form textarea {
+    resize: vertical;
+}
+
+.blog form button {
+    background: #14532d;
+    color: #FCEE21;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 5px;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.blog form button:hover {
+    background: #446129;
+    transform: translateY(-1px);
+}
+
+.blog form .btn-secondary {
+    background: #6b7280;
+    color: #fff;
+}
+
+.blog form .btn-secondary:hover {
+    background: #4b5563;
+}
+
+/* Зображення посту */
+.blog img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+.blog .edit-mode {
+    padding: 10px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    margin-top: 10px;
+}
+
+.blog .edit-mode input[type="text"],
+.blog .edit-mode select,
+.blog .edit-mode textarea,
+.blog .edit-mode input[type="file"],
+.blog .edit-mode input[type="color"] {
+    width: 100%;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+.btn-edit {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background-color: #008CBA;
+  color: white;
+  padding: 7px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: gray;
+  color: white;
+  padding: 7px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.edit-post {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.edit-post h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.edit-post form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.edit-post label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.edit-post input[type="text"],
+.edit-post input[type="file"],
+.edit-post textarea,
+.edit-post select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
+.edit-post input[type="text"]:focus,
+.edit-post input[type="file"]:focus,
+.edit-post textarea:focus,
+.edit-post select:focus {
+  border-color: #4a90e2;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74,144,226,0.3);
+}
+
+.edit-post textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.edit-post .btn-save,
+.edit-post .btn-cancel {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.edit-post .btn-save {
+  background: #446129;
+  color: rgb(255, 251, 2);
+}
+
+.edit-post .btn-save:hover {
+  background: #446129;
+}
+
+.edit-post .btn-cancel {
+  background: #ddd;
+  color: #333;
+  margin-left: 10px;
+}
+
+.edit-post .btn-cancel:hover {
+  background: #bbb;
+}
+
+
+
+
+
+
+ul.saved-posts {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+ul.saved-posts li {
+  background-color: #446129;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+ul.saved-posts li a {
+  text-decoration: none;
+  color: #fbff07;
+  font-weight: 500;
+}
+
+ul.saved-posts li:hover {
+  background-color: #03290f;
+  transform: translateX(3px);
+}
+
+/* Кнопка збереження */
+.btn-save {
+  background-color: #d1ff29;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-save:hover {
+  background-color: #c5a412;
+  transform: translateY(-2px);
+}
+
+/* Якщо пост вже збережений - інший колір */
+.btn-saved {
+  background-color: #ffda07;
+}
+
+.btn-saved:hover {
+  background-color: #fbff15;
+  transform: translateY(-2px);
+}
+.saved-posts {
+  margin-top: 30px;
+  padding: 15px;
+  background: #0d2403;
+  border-radius: 10px;
+}
+
+.saved-posts h2 {
+  margin-bottom: 10px;
+  color: #ffdd1c;
+}
+
+.saved-posts ul {
+  list-style: none;
+  padding: 0;
+}
+
+.saved-posts li {
+  margin-bottom: 8px;
+}
+
+.saved-posts a {
+  text-decoration: none;
+  color: #fbff00;
+}
+
+.saved-posts a:hover {
+  text-decoration: underline;
+}
+.blog-media {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.blog-video {
+    width: 100%;              
+    max-height: 400px;        
+    object-fit: cover;        
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    background: #000;
+}
+.comment-section textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 10px;
+    border: 1px solid #004400;
+    border-radius: 6px;
+    padding: 6px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.submit-btn {
+    background: darkgreen;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.blog-bookmark {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    color: #ccc; /* сіро-біла */
+    transition: color 0.3s;
+}
+
+.blog-bookmark.active {
+    color: gold; /* жовта при збереженні */
+}
+
+
+.post-list#saved_blogs{
+    display: none;
+}
+.posts-selector {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    justify-content: center; /* по центру */
+}
+
+.posts-selector button {
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.posts-selector button:hover {
+    background-color: #333;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.posts-selector button.active {
+    background-color: #1e4d2b; /* темно-зелений активний */
+    color: #fff;
+    border-color: #1e4d2b;
+}
+
+.posts-selector h2 {
+    margin: 0;
+    font-size: 18px;
+}
+/* ======== Поле пошуку у навігації ======== */
+.nav-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.nav-search input[type="text"] {
+    padding: 6px 14px;
+    border: 2px solid #2f4f2f;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 180px;
+}
+
+.nav-search input[type="text"]::placeholder {
+    color: #888;
+}
+
+.nav-search input[type="text"]:focus {
+    background-color: #fff;
+    border-color: #3d7c3d;
+    box-shadow: 0 0 6px rgba(61, 124, 61, 0.3);
+}
+
+.nav-search button {
+    background-color: #2f4f2f;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-search button:hover {
+    background-color: #3d7c3d;
+    transform: scale(1.05);
+}

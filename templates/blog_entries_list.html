@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<title>Blog App:All Entry</title>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/blog_entries_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/popular' %}">
+{% endblock %}
+
+{% block content %}
+<div class="all_entries_container">
+    <div class="entries_categories">
+
+        <a href="?" class="category active">All</a>
+
+        {% for category in categories %}
+        
+          <a class="category" href="?category={{category.title}}">{{category.title}}</a>
+      
+        {% endfor %}
+    </div>
+     <div class="blogs-list">
+            {% for post in posts %}
+            <div class="blog">
+                <a href="{% url 'blog_entry_details' blog_id=post.id %}"
+                 class="blog-link">
+                <div class="blog-header">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="blog-image">
+                        {% else %}
+                        <img src="{% static 'img/blog_cart.png' %}" alt="default" class="blog-image">
+                        {% endif %}
+                    <p class="blog-header-category">{{post.category.title}}</p>
+                </div>
+                <div class="blog-content">
+                    <h2 class="blog-title">{{post.title}}</h2>
+                    <div class="blog-description">{{post.content | safe}}</div>
+                    <div class="blog-content-created">
+                        <p
+                            class="blog-content-created-date">
+                            {{post.created_at|date:"d/m/Y"}}</p>
+                        <p class="blog-content-created-author">{{post.user}}</p>
+                    </div>
+                </div>
+                </a>
+            </div>
+            
+            {% endfor %}
+        
+        </div>
+    </div>
+    
+</div>
+
+
+   
+
+  
+
+  <!-- <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = document.querySelectorAll('.category');
+
+      links.forEach(link => {
+        link.addEventListener('click', function(event) {
+          event.preventDefault(); // скасовує навігацію за посиланням :contentReference[oaicite:0]{index=0}
+          links.forEach(el => el.classList.remove('active')); // видаляє клас з усіх :contentReference[oaicite:1]{index=1}
+          this.classList.add('active'); // додає `active` до натиснутого елемента :contentReference[oaicite:2]{index=2}
+        });
+      });
+    });
+  </script> -->
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const categories = document.querySelectorAll(".category");
+        categories.forEach(category=>category.classList.remove("active"))
+
+        const urlParams=new URLSearchParams(window.location.search);
+        const categoryParam=urlParams.get("category");
+        
+        if(categoryParam){
+            const activeCategory=document.querySelector(`.category[href="?category=${categoryParam}"]`);
+            if(activeCategory){
+                activeCategory.classList.add("active");
+            }
+        }else{
+            const activeCategory=document.querySelector('.category[href="?"]');
+            if(activeCategory){
+                activeCategory.classList.add("active");
+            }
+            
+        }
+
+    })
+</script>
+
+  
+{% endblock %}

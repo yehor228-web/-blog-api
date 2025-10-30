@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/nullable.css' %}">
+
+    {% block head %}
+
+    <title>Blog App</title>
+    {% endblock %}
+</head>
+
+<body>
+    <nav class="nav">
+    <h1 class="nav-title">Blog App</h1>
+    <ul class="nav-links">
+        <li class="nav-link"><a href="{% url 'home' %}">Home</a></li>
+        <li class="nav-link"><a href="{% url 'all_blog_entries' %}">Blog</a></li>
+        <li class="nav-link"><a href="{% url 'about' %}">About</a></li>
+
+        {% if request.user.is_authenticated %}
+            <li class="nav-link"><a href="{% url 'create_blog_entry' %}">Create Entry</a></li>
+            <li class="nav-link"><a href="{% url 'profile_detail' username=request.user.username %}">Profile</a></li>
+            <li class="nav-link"><a href="{% url 'logout' %}">Logout</a></li>
+
+            <form class="nav-search" action="{% url 'search_user' %}" method="get">
+                <input type="text" name="q" placeholder="Пошук користувача...">
+                <button type="submit">🔍</button>
+            </form>
+        {% else %}
+            <li class="nav-link"><a href="{% url 'registration' %}">Registration</a></li>
+            <li class="nav-link"><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="message {{ message.tags }}" {% endif %}>
+            <p>{{ message }}</p>
+            <button class="message-close-btn" onclick="closeMessage(this)">
+                <svg class="progress-ring" width="50" height="50">
+                    <circle class="progress-ring-circle" stroke="black" stroke-width="5" fill="transparent" r="20"
+                        cx="23" cy="25"></circle>
+                </svg>
+                <img src="{% static 'img/cross.svg' %}" alt="Close">
+            </button>
+            {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}
+
+    {% endblock %}
+    <script>
+
+        function closeMessage(btn) {
+            console.log('close message')
+
+            let message = btn.parentElement;
+            message.remove();
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            let messages = document.querySelectorAll(".messages li");
+            messages.forEach((message) => {
+                let timeout = 15000;
+                let startTime = Date.now();
+                let circle = message.querySelector(".progress-ring-circle");
+                if (!circle) {
+                    return
+                }
+
+                let radius = circle.r.baseVal.value;
+                let dis = 2 * Math.PI * radius;
+                console.log("Radius: dis", radius, dis);
+
+                // let timer=setTimeout(()=>{
+
+                //     console.log("Delete 15 seconds passed");
+                //     message.remove();
+
+                // }, timeout);
+                let totalSteps = timeout / 1000;
+                let step = 0;
+
+                circle.style.strokeDasharray = `${dis} ${dis}`;
+                circle.style.strokeDashoffset = 0;
+                let interval = setInterval(() => {
+                    console.log("Interval");
+                    step++;
+                    let progress = step / totalSteps;
+                    let offset = dis * progress;
+                    circle.style.strokeDashoffset = offset;
+
+                    if (step >= totalSteps) {
+                        clearInterval(interval);
+                        message.remove();
+                    }
+
+                }, 1000)
+            });
+        });
+
+
+        //         const circle = message.querySelector('.progress-ring-circle');
+        //         if (circle) {
+        //             setTimeout(() => {
+        //                 circle.setAttribute('fill', 'red');
+        //             }, 2000);
+        //         }
+
+
+    </script>
+</body>
+
+</html>
