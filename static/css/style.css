@@ -66,6 +66,37 @@
     margin: 0 auto;
 }
 
+header {
+    background: linear-gradient(to right, var(--primary-bg-color), var(--secondary-bg-color));
+}
+
+.header {
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.header-description {
+    width: 60%;
+}
+
+.header-image {
+    width: 35%;
+}
+
+.header-title{
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+    font-size: 50px;
+    font-weight: bold;
+}
+.header-subtitle {
+    color: var(--secondary-text-color);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
 /* ====== MOBILE FIX ====== */
 @media (max-width: 768px) {
 
