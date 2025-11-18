@@ -153,33 +153,92 @@ header {
     cursor: pointer;
 }
 
-/* Меню-гамбургер для мобільних */
+/* Базова стилізація */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.nav-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+    display: block;
+    text-align: center;
+}
+
+.nav-links li a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Пошук */
+.nav-search {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.nav-search input {
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+}
+
+.nav-search button {
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Гамбургер для мобільних */
 .nav-toggle {
     display: none;
 }
 
 .nav-toggle-label {
     display: none;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
 }
 
-/* Адаптивність */
-@media (max-width: 768px) {
+/* Адаптивність для телефонів та планшетів */
+@media (max-width: 1024px) {
     .nav-links {
         display: none;
         flex-direction: column;
         width: 100%;
         margin-top: 0.5rem;
+        background-color: #333;
     }
 
     .nav-links li {
-        text-align: center;
+        width: 100%;
     }
 
     .nav-search {
         width: 100%;
         justify-content: center;
+        margin-top: 0.5rem;
     }
 
     .nav-toggle-label {
@@ -188,6 +247,28 @@ header {
 
     .nav-toggle:checked + .nav-toggle-label + .nav-links {
         display: flex;
+    }
+}
+
+/* Для дуже маленьких екранів (портрет мобільного) */
+@media (max-width: 480px) {
+    .nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-title {
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-search input {
+        flex: 1;
+        width: 70%;
+    }
+
+    .nav-search button {
+        flex-shrink: 0;
     }
 }
 /* ====== MOBILE FIX ====== */
