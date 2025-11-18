@@ -66,37 +66,56 @@
     margin: 0 auto;
 }
 
-header {
-    background: linear-gradient(to right, var(--primary-bg-color), var(--secondary-bg-color));
+/* ====== MOBILE FIX ====== */
+@media (max-width: 768px) {
+
+    .header {
+        flex-direction: column;   /* Стає один під одним */
+        text-align: center;
+        padding: 20px 10px;
+    }
+
+    .header-description {
+        width: 100%;              /* Займає всю ширину */
+    }
+
+    .header-image {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .header-image img {
+        width: 80%;
+        max-width: 280px;         /* Не буде гігантською */
+    }
+
+    .header-title {
+        font-size: 32px !important;   /* Зменшуємо */
+        line-height: 1.2;
+        word-break: normal;
+    }
+
+    .header-subtitle {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .newsletter {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .newsletter input,
+    .newsletter button {
+        width: 100%;
+        padding: 12px;
+    }
 }
 
-.header {
-
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
-
-.header-description {
-    width: 60%;
-}
-
-.header-image {
-    width: 35%;
-}
-
-.header-title{
-    color: var(--primary-text-color);
-    margin-bottom: 10px;
-    font-size: 50px;
-    font-weight: bold;
-}
-.header-subtitle {
-    color: var(--secondary-text-color);
-    font-size: 20px;
-    margin-bottom: 10px;
-}
 .newsletter{
     width: 100%;
     display: flex;
