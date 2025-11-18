@@ -97,6 +97,99 @@ header {
     font-size: 20px;
     margin-bottom: 10px;
 }
+/* Базова стилізація */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+    flex-wrap: wrap;
+}
+
+.nav-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.3rem 0.5rem;
+}
+
+.nav-links li a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+/* Пошук */
+.nav-search {
+    display: flex;
+    gap: 0.2rem;
+    margin-top: 0.5rem;
+}
+
+.nav-search input {
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+}
+
+.nav-search button {
+    padding: 0.3rem 0.5rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Меню-гамбургер для мобільних */
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .nav-links li {
+        text-align: center;
+    }
+
+    .nav-search {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-toggle-label {
+        display: block;
+    }
+
+    .nav-toggle:checked + .nav-toggle-label + .nav-links {
+        display: flex;
+    }
+}
 /* ====== MOBILE FIX ====== */
 @media (max-width: 768px) {
 
