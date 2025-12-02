@@ -57,18 +57,18 @@ def registration(request):
             print("uid:",uid)
             
 
-            html_message = render_to_string(
-                "emails/registration_confirm.html",
-                context={"user": user,"uid":uid,"token":user_token},
-            )
+            # html_message = render_to_string(
+            #     "emails/registration_confirm.html",
+            #     context={"user": user,"uid":uid,"token":user_token},
+            # )
 
-            send_email(
-                request,
-                "BlogApp: Registration Confirm",
-                "Confirm your registration",
-                html_message,
-                [user.email],
-            )
+            # send_email(
+            #     request,
+            #     "BlogApp: Registration Confirm",
+            #     "Confirm your registration",
+            #     html_message,
+            #     [user.email],
+            # )
             
             messages.success(request, f"Welcome, {user.username}!")
             return redirect("login")
